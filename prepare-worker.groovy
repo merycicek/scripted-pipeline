@@ -1,5 +1,8 @@
 properties(
-    [parameters([string(defaultValue: '', description: 'Please enter VM IP ', name: 'nodeIP', trim: true)])])
+    [parameters([
+        string(defaultValue: '', description: 'Please enter VM IP ', name: 'nodeIP', trim: true)
+        ])
+    ])
 
 if (myString?.trim()){
     node  { 
