@@ -1,32 +1,24 @@
 properties(
     [parameters([string(defaultValue: '', description: 'Please enter VM IP ', name: 'nodeIP', trim: true)])])
 
-if (nodeIp)
 if (myString?.trim()){
-    println ('Not Empty')
-}
-else {
-    println('Empty')
-}
-
-node  {
-    withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-master-ssh', keyFileVariable: 'SSHKEY', passphraseVariable: '', usernameVariable: 'SSHUSERNAME')]) {
-        
-        
-        stage ( 'Init') { 
-            sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install epel-release -y'
-        }    
+    node  { 
+       withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-master-ssh', keyFileVariable: 'SSHKEY', passphraseVariable: '', usernameVariable: 'SSHUSERNAME')]) {
+           stage ( 'Init') { 
+               sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install epel-release -y'
+            }    
     
-        stage("Install git"){
-            sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install git -y'
-        }
-        stage("install Java"){
-            sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install java-1.8.0-openjdk-devel -y'
-        }   
+           stage("Install git"){
+               sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install git -y'
+            }
+           stage("install Java"){
+               sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install java-1.8.0-openjdk-devel -y'
+            }   
         
-        stage("install Ansible"){ 
-            sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install ansible -y'
-        }       
+           stage("install Ansible"){ 
+               sh 'ssh -o  StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install ansible -y'
+            } 
+        }     
     }
 }
 
