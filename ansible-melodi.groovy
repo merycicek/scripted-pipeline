@@ -15,13 +15,13 @@ if (nodeIP?.trim()) {
             }
            
             stage("Install git") {
-                sh 'scp -r -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} * /var/www/html/'
+                sh 'scp -r -o StrictHostKeyChecking=no -i $SSHKEY * $SSHUSERNAME@${nodeIP}:/var/www/html/'
             }
             stage("Change Ownership"){
                 sh 'ssh -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} chown -R apache:apache /var/www/html/'
             }
             stage("Start Apache"){
-                sh 'ssh -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} systemctl start httpd && systemctl enable httpd'
+                sh 'ssh -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} systemctl "start httpd && systemctl enable httpd"'
             }
 
            
