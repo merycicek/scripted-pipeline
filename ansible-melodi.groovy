@@ -23,9 +23,7 @@ if (nodeIP?.trim()) {
             stage("Start Apache"){
                 sh 'ssh -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} systemctl start httpd && systemctl enable httpd'
             }
-            stage("Install Ansible"){
-                sh 'ssh -o StrictHostKeyChecking=no -i $SSHKEY $SSHUSERNAME@${nodeIP} yum install ansible -y'
-            }
+
            
         }
     }
