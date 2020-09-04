@@ -1,3 +1,4 @@
+
 properties([
     parameters([
         string(defaultValue: '', description: 'Please enter VM IP', name: 'nodeIP', trim: true),
@@ -10,19 +11,15 @@ if (nodeIP?.trim()) {
         stage('Pull Repo') {
             git branch: 'master', changelog: false, poll: false, url: 'https://github.com/ikambarov/ansible-melodi.git'
         }
-            
-        withEnv(['export ANSIBLE_HOST_KEY_CHECKING=False']) {
+
+        withEnv(['ANSIBLE_HOST_KEY_CHECKING=False']) {
             stage("Install Apache"){
-                ansiblePlaybook credentialsId: 'jenkins-master-ssh-key', extras: '-e melodi_branch=${branch}', inventory: '${nodeIP},', playbook: 'main.yml '
+                ansiblePlaybook credentialsId: 'jenkins-master-ssh-key', extras: '-e melodi_branch=${branch}', inventory: '${nodeIP},', playbook: 'main.yml'
                 }
-            }        
-        
+            }  
         }  
-
-            
-        
 }
-
 else {
     error 'Please enter valid IP address'
 }
+
