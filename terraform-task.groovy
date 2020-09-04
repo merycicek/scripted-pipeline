@@ -1,14 +1,14 @@
 node {
     stage( " Pull Repo") {
-       git branch: 'solution', url: 'https://github.com/ikambarov/terraform-task.git'
+       git branch: 'solution', changelog: false, poll: false, url: 'https://github.com/ikambarov/terraform-task.git'
     }
-        stage( " Pull Repo") {
-        ssh '''
-        cd 	sandbox/
-        terraform init
-        '''
+    stage( " Terraform Init") {
+        sh '''
+            terraform-0.13 version
+            terraform-0.13 init
+           ''' 
     }
-        stage( " Terraform Apply") {
-        ssh 'echo "terraform apply" '
+    stage( " Terraform Apply") {
+        sh 'echo "terraform apply" '
     }
 }
