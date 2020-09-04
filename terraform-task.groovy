@@ -4,6 +4,7 @@ node {
     }
     stage( " Terraform Init") {
         sh '''
+            cd sandbox/
             terraform-0.13 version
             terraform-0.13 init
            ''' 
